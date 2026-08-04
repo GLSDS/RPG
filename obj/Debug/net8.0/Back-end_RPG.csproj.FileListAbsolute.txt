@@ -1,0 +1,11 @@
+C:\Users\Utilizador\OneDrive\Back-end_RPG\bin\Debug\net8.0\Back-end_RPG.deps.json
+C:\Users\Utilizador\OneDrive\Back-end_RPG\bin\Debug\net8.0\Back-end_RPG.dll
+C:\Users\Utilizador\OneDrive\Back-end_RPG\bin\Debug\net8.0\Back-end_RPG.pdb
+C:\Users\Utilizador\OneDrive\Back-end_RPG\obj\Debug\net8.0\Back-end_RPG.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Utilizador\OneDrive\Back-end_RPG\obj\Debug\net8.0\Back-end_RPG.AssemblyInfoInputs.cache
+C:\Users\Utilizador\OneDrive\Back-end_RPG\obj\Debug\net8.0\Back-end_RPG.AssemblyInfo.cs
+C:\Users\Utilizador\OneDrive\Back-end_RPG\obj\Debug\net8.0\Back-end_RPG.csproj.CoreCompileInputs.cache
+C:\Users\Utilizador\OneDrive\Back-end_RPG\obj\Debug\net8.0\Back-end_RPG.dll
+C:\Users\Utilizador\OneDrive\Back-end_RPG\obj\Debug\net8.0\refint\Back-end_RPG.dll
+C:\Users\Utilizador\OneDrive\Back-end_RPG\obj\Debug\net8.0\Back-end_RPG.pdb
+C:\Users\Utilizador\OneDrive\Back-end_RPG\obj\Debug\net8.0\ref\Back-end_RPG.dll
