@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Utilizador\\OneDrive\\Back-end_RPG\\Back-end_RPG.csproj": {}
+    "C:\\Users\\Utilizador\\OneDrive\\RPG\\Back-end_RPG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Utilizador\\OneDrive\\Back-end_RPG\\Back-end_RPG.csproj": {
+    "C:\\Users\\Utilizador\\OneDrive\\RPG\\Back-end_RPG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Utilizador\\OneDrive\\Back-end_RPG\\Back-end_RPG.csproj",
+        "projectUniqueName": "C:\\Users\\Utilizador\\OneDrive\\RPG\\Back-end_RPG.csproj",
         "projectName": "Back-end_RPG",
-        "projectPath": "C:\\Users\\Utilizador\\OneDrive\\Back-end_RPG\\Back-end_RPG.csproj",
+        "projectPath": "C:\\Users\\Utilizador\\OneDrive\\RPG\\Back-end_RPG.csproj",
         "packagesPath": "C:\\Users\\Utilizador\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Utilizador\\OneDrive\\Back-end_RPG\\obj\\",
+        "outputPath": "C:\\Users\\Utilizador\\OneDrive\\RPG\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
