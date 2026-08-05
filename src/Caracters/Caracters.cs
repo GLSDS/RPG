@@ -123,12 +123,12 @@ namespace Back_end_RPG.caracter
                     PassiveEffect = 20; // Reduces damage taken by 20%
 
                     Offensive1 = "Fireball";
-                    Offensive1ManaCost = 50;
-                    Offensive1Damage = 100;
+                    Offensive1ManaCost = 10;
+                    Offensive1Damage = 30;
 
                     Offensive2 = "Ice Lance";
                     Offensive2ManaCost = 40;
-                    Offensive2Damage = 80;
+                    Offensive2Damage = 70;
 
                     Offensive3 = "Arcane Blast";
                     Offensive3ManaCost = 60;
