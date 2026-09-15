@@ -213,24 +213,27 @@ namespace BackEndRPG.Character
     {
         public string Passive { get; set; } = "";
         public string PassiveDescription { get; set; } = "";
-        public double PassiveEffect { get; set; }
+        public int PassiveEffect { get; set; }
 
         public string Offensive1 { get; set; } = "";
         public int Offensive1ManaCost { get; set; }
-        public double Offensive1Damage { get; set; }
+        public int Offensive1Damage { get; set; }
+        public String offensive1Type { get; set; } = "";
 
         public string Offensive2 { get; set; } = "";
         public int Offensive2ManaCost { get; set; }
-        public double Offensive2Damage { get; set; }
+        public int Offensive2Damage { get; set; }
+        public String offensive2Type { get; set; } = "";
 
         public string Offensive3 { get; set; } = "";
         public int Offensive3ManaCost { get; set; }
-        public double Offensive3Damage { get; set; }
+        public int Offensive3Damage { get; set; }
+        public String offensive3Type { get; set; } = "";
 
         public string Artifact { get; set; } = "";
         public string ArtifactDescription { get; set; } = "";
-        public double ArtifactDamage { get; set; }
-        public double ArtifactHeal { get; set; }
+        public int ArtifactDamage { get; set; }
+        public int ArtifactHeal { get; set; }
 
         public virtual void DisplayStats()
         {
@@ -263,7 +266,7 @@ namespace BackEndRPG.Character
             Console.WriteLine();
         }
 
-        public void SetArtifact(string name, string description, double damage, double heal)
+        public void SetArtifact(string name, string description, int damage, int heal)
         {
             Artifact = name;
             ArtifactDescription = description;

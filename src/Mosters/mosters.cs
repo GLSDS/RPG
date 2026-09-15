@@ -22,10 +22,31 @@ namespace Monsters
         }
     }
 
+    public class ChoiceLevel
+    {
+        private Random rand = new Random();
+        public int Level { get; private set; }
+        public int MaxHp { get; set; }
+        public int Hp { get; set; }
+        public int MaxMana { get; set; }
+        public int Mana { get; set; }
+        public int Xp { get; set; }
+
+        public ChoiceLevel()
+        {
+            Level = rand.Next(1, 8); // 1-7
+            MaxHp = Level + (int)(Level * 0.4);
+            Hp = MaxHp;
+            MaxMana = Level + (int)(Level * 0.5);
+            Mana = MaxMana;
+            Xp = Level + (int)(Level * 0.6);
+        }
+    }
+
     public class Monsters
     {
         public string Name { get; set; }
-        public int Level { get; set; }
+        public int Level { get; private set; }
         public int Hp { get; set; }
         public int MaxHp { get; set; }
         public int Mana { get; set; }
@@ -35,17 +56,17 @@ namespace Monsters
         public bool Shield { get; set; }
         public int ProtectionOfShield { get; set; }
 
-        public Monsters(string name, int level, int hp, int mana, int xp = 0)
+        public Monsters(string name, int level, int hp, int maxHp, int mana, int xp = 0, bool shield = false)
         {
             Name = name;
             Level = level;
             Hp = hp;
-            MaxHp = hp;
+            MaxHp = maxHp;
             Mana = mana;
             MaxMana = mana;
             Xp = xp;
             Attacks = new List<Attack>();
-            Shield = false;
+            Shield = shield;
             ProtectionOfShield = hp / 4;
         }
 
@@ -54,7 +75,6 @@ namespace Monsters
             Attacks.Add(new Attack(name, damage, manaCost));
         }
 
-        // Método corrigido para escolher ataque por índice
         public void ChooseAttack(int index)
         {
             if (index < 0 || index >= Attacks.Count)
@@ -65,7 +85,6 @@ namespace Monsters
 
             Attack chosenAttack = Attacks[index];
             
-            // Verifica se tem mana suficiente
             if (chosenAttack.ManaCost > Mana)
             {
                 Console.WriteLine($"Not enough mana! Need {chosenAttack.ManaCost}, have {Mana}");
@@ -77,8 +96,6 @@ namespace Monsters
             Console.WriteLine($"Dealt {chosenAttack.Damage} damage!");
         }
 
-        // Método para escolher ataque por nome
-        #pragma warning disable CS8600
         public void ChooseAttack(string attackName)
         {
             Attack foundAttack = null;
@@ -107,9 +124,7 @@ namespace Monsters
             Console.WriteLine($"{Name} used {foundAttack.Name}!");
             Console.WriteLine($"Dealt {foundAttack.Damage} damage!");
         }
-        #pragma warning restore CS8600
 
-        // Método para mostrar ataques e escolher
         public void ShowAndChooseAttack()
         {
             ShowAttacks();
@@ -117,14 +132,14 @@ namespace Monsters
             
             if (int.TryParse(Console.ReadLine(), out int choice))
             {
-                ChooseAttack(choice - 1); // Ajusta para índice 0-based
+                ChooseAttack(choice - 1);
             }
             else
             {
                 Console.WriteLine("Invalid input!");
             }
         }
-
+            
         public virtual void DisplayInfo()
         {
             Console.WriteLine($"=== {Name} ===");
@@ -145,6 +160,25 @@ namespace Monsters
             }
         }
 
+        // New unified attack method for all monsters
+        public virtual void PerformRandomAttack()
+        {
+            Console.WriteLine($"\n=== {Name} is attacking! ===");
+            
+            Console.WriteLine("Available attacks:");
+            foreach (var attack in Attacks)
+            {
+                Console.WriteLine($"- {attack.GetDisplay()}");
+            }
+
+            Random rand = new Random();
+            int attackIndex = rand.Next(Attacks.Count);
+            Attack chosenAttack = Attacks[attackIndex];
+            
+            Console.WriteLine($"\n{Name} used {chosenAttack.Name}!");
+            Console.WriteLine($"Dealt {chosenAttack.Damage} damage!");
+        }
+
         public void TakeDamage(int damage)
         {
             if (Shield)
@@ -163,17 +197,17 @@ namespace Monsters
             return Hp > 0;
         }
 
-        // Método para restaurar mana
         public void RestoreMana(int amount)
         {
             Mana = Math.Min(MaxMana, Mana + amount);
             Console.WriteLine($"{Name} restored {amount} mana! Mana: {Mana}/{MaxMana}");
         }
     }
-/****************************************************FLOOR 1****************************************************/
-public class Slime : Monsters
+
+    /****************************************************FLOOR 1****************************************************/
+    public class Slime : Monsters
     {
-        public Slime() : base("Slime", 1, 50, 40, 30)
+        public Slime() : base("Slime", 1, 50, 50, 30)
         {
             AddAttack("Normal Attack", 20, 0);
             AddAttack("Slime Splash", 10, 5);
@@ -182,37 +216,11 @@ public class Slime : Monsters
             
             Shield = false;
         }
-
-        public void AttackSlime()
-        {
-            Console.WriteLine($"\n=== {Name} is attacking! ===");
-            
-            // Criando array com os nomes dos ataques formatados
-            string[] attackNames = new string[Attacks.Count];
-            for (int i = 0; i < Attacks.Count; i++)
-            {
-                attackNames[i] = Attacks[i].GetDisplay();
-            }
-
-            // Mostrando todos os ataques
-            Console.WriteLine("Available attacks:");
-            foreach (string attack in attackNames)
-            {
-                Console.WriteLine($"- {attack}");
-            }
-
-            // Simulando um ataque aleatório
-            Random rand = new Random();
-            int attackIndex = rand.Next(Attacks.Count);
-            Attack chosenAttack = Attacks[attackIndex];
-            
-            Console.WriteLine($"\n{Name} used {chosenAttack.Name}!");
-            Console.WriteLine($"Dealt {chosenAttack.Damage} damage!");
-        }
     }
+
     public class WarriorSkeleton : Monsters
     {
-        public WarriorSkeleton() : base("WarriorSkeleton", 1, 70, 0, 50)
+        public WarriorSkeleton() : base("WarriorSkeleton", 1, 70, 70, 50)
         {
             AddAttack("Normal Attack", 28, 0);
             AddAttack("Slash", 30, 0);
@@ -220,114 +228,31 @@ public class Slime : Monsters
             
             Shield = false;
         }
-
-        public void AttackSkeleton()
-        {
-            Console.WriteLine($"\n=== {Name} is attacking! ===");
-            
-            // Criando array com os nomes dos ataques formatados
-            string[] attackNames = new string[Attacks.Count];
-            for (int i = 0; i < Attacks.Count; i++)
-            {
-                attackNames[i] = Attacks[i].GetDisplay();
-            }
-
-            // Mostrando todos os ataques
-            Console.WriteLine("Available attacks:");
-            foreach (string attack in attackNames)
-            {
-                Console.WriteLine($"- {attack}");
-            }
-
-            // Simulando um ataque aleatório
-            Random rand = new Random();
-            int attackIndex = rand.Next(Attacks.Count);
-            Attack chosenAttack = Attacks[attackIndex];
-            
-            Console.WriteLine($"\n{Name} used {chosenAttack.Name}!");
-            Console.WriteLine($"Dealt {chosenAttack.Damage} damage!");
-            }
-        }
+    }
     
     public class MageSkeleton : Monsters
     {
-        public MageSkeleton() : base("MageSkeleton", 1, 60, 90, 80)
+        public MageSkeleton() : base("MageSkeleton", 1, 60, 60, 80)
         {
-            AddAttack("fire ball", 28, 0);
+            AddAttack("Fire Ball", 28, 0);
             AddAttack("Slash", 30, 0);
             AddAttack("Shield Bash Combo", 30, 0);
             
             Shield = false;
         }
-
-        public void AttackSkeleton()
-        {
-            Console.WriteLine($"\n=== {Name} is attacking! ===");
-            
-            // Criando array com os nomes dos ataques formatados
-            string[] attackNames = new string[Attacks.Count];
-            for (int i = 0; i < Attacks.Count; i++)
-            {
-                attackNames[i] = Attacks[i].GetDisplay();
-            }
-
-            // Mostrando todos os ataques
-            Console.WriteLine("Available attacks:");
-            foreach (string attack in attackNames)
-            {
-                Console.WriteLine($"- {attack}");
-            }
-
-            // Simulando um ataque aleatório
-            Random rand = new Random();
-            int attackIndex = rand.Next(Attacks.Count);
-            Attack chosenAttack = Attacks[attackIndex];
-            
-            Console.WriteLine($"\n{Name} used {chosenAttack.Name}!");
-            Console.WriteLine($"Dealt {chosenAttack.Damage} damage!");
-        }
     }
 
-
-
-public class GigantSpider : Monsters
+    public class GigantSpider : Monsters
     {
-        public GigantSpider() : base("Gigant Spider", 1, 90, 80, 50)
+        public GigantSpider() : base("Gigant Spider", 1, 90, 90, 50)
         {
             AddAttack("Bite", 45, 0);
-            AddAttack("web", 30, 27);
-            AddAttack("poison atack", 48, 30);
+            AddAttack("Web", 30, 27);
+            AddAttack("Poison Attack", 48, 30);
             
             Shield = false;
         }
-
-        public void AttackSpider()
-        {
-            Console.WriteLine($"\n=== {Name} is attacking! ===");
-            
-            // Criando array com os nomes dos ataques formatados
-            string[] attackNames = new string[Attacks.Count];
-            for (int i = 0; i < Attacks.Count; i++)
-            {
-                attackNames[i] = Attacks[i].GetDisplay();
-            }
-
-            // Mostrando todos os ataques
-            Console.WriteLine("Available attacks:");
-            foreach (string attack in attackNames)
-            {
-                Console.WriteLine($"- {attack}");
-            }
-
-            // Simulando um ataque aleatório
-            Random rand = new Random();
-            int attackIndex = rand.Next(Attacks.Count);
-            Attack chosenAttack = Attacks[attackIndex];
-            
-            Console.WriteLine($"\n{Name} used {chosenAttack.Name}!");
-            Console.WriteLine($"Dealt {chosenAttack.Damage} damage!");
-        }
     }
 
-/****************************************************FLOOR 2****************************************************/
+    /****************************************************FLOOR 2****************************************************/
 }
