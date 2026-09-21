@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="YMoTofOl1pra5so6SXaN" name="caracters">
-        <mxGraphModel dx="1047" dy="770" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="659" dy="620" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -61,7 +61,7 @@
                 <mxCell id="24" value="Floors" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="354" y="580" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="32" value="5 Floors" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="32" value="? Floors" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="514" y="740" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="48" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="33" target="39" edge="1">
@@ -79,7 +79,7 @@
                 <mxCell id="37" value="Boost of Skils" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="80" y="930" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="38" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="38" value="Equipaments" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="80" y="1040" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="39" value="ruins" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -89,7 +89,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="VQMHuW5Otu2IuDxCNhWo" name="Monsters">
-        <mxGraphModel dx="1047" dy="770" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="692" dy="651" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -192,7 +192,7 @@
                 <mxCell id="8ubgR6SyoiWkqr5Pb5nl-6" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="514" y="410" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="8ubgR6SyoiWkqr5Pb5nl-7" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="8ubgR6SyoiWkqr5Pb5nl-7" value="Stone golen" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="360" y="460" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="8ubgR6SyoiWkqr5Pb5nl-8" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -219,7 +219,7 @@
                 <mxCell id="8ubgR6SyoiWkqr5Pb5nl-27" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="8ubgR6SyoiWkqr5Pb5nl-28" target="8ubgR6SyoiWkqr5Pb5nl-31" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="8ubgR6SyoiWkqr5Pb5nl-28" value="Floor 5; Theme: ?" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="8ubgR6SyoiWkqr5Pb5nl-28" value="Floor 5+; Theme: ?" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="160" y="1010" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="8ubgR6SyoiWkqr5Pb5nl-29" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">

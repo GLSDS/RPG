@@ -22,3 +22,15 @@ C:\Users\Utilizador\OneDrive\RPG\obj\Debug\net8.0\Back-end_RPG.dll
 C:\Users\Utilizador\OneDrive\RPG\obj\Debug\net8.0\refint\Back-end_RPG.dll
 C:\Users\Utilizador\OneDrive\RPG\obj\Debug\net8.0\Back-end_RPG.pdb
 C:\Users\Utilizador\OneDrive\RPG\obj\Debug\net8.0\ref\Back-end_RPG.dll
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\obj\Debug\net8.0\Back-end_RPG.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\obj\Debug\net8.0\Back-end_RPG.AssemblyInfoInputs.cache
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\obj\Debug\net8.0\Back-end_RPG.AssemblyInfo.cs
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\obj\Debug\net8.0\Back-end_RPG.csproj.CoreCompileInputs.cache
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\obj\Debug\net8.0\Back-end_RPG.sourcelink.json
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\obj\Debug\net8.0\Back-end_RPG.dll
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\obj\Debug\net8.0\refint\Back-end_RPG.dll
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\obj\Debug\net8.0\Back-end_RPG.pdb
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\bin\Debug\net8.0\Back-end_RPG.deps.json
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\bin\Debug\net8.0\Back-end_RPG.dll
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\bin\Debug\net8.0\Back-end_RPG.pdb
+C:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\Documentos\GitHub\RPG\obj\Debug\net8.0\ref\Back-end_RPG.dll

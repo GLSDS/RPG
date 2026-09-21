@@ -1,22 +1,27 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Random = System.Random;
 
 namespace Monsters
 {
+    // ─────────────────────────────────────────────────────────────
+    // ATTACK
+    // ─────────────────────────────────────────────────────────────
     public class Attack
     {
         public string Name { get; }
         public int Damage { get; }
         public double ManaCost { get; }
+        public string Type { get; }
         public bool GrantsShield { get; }
 
-        public Attack(string name, int damage, double manaCost = 0, bool grantsShield = false)
+        public Attack(string name, int damage, double manaCost = 0, string type = "", bool grantsShield = false)
         {
             Name = name;
             Damage = damage;
             ManaCost = manaCost;
+            Type = type;
             GrantsShield = grantsShield;
         }
 
@@ -27,50 +32,67 @@ namespace Monsters
         }
     }
 
+    // ─────────────────────────────────────────────────────────────
+    // CHOICE LEVEL
+    // ─────────────────────────────────────────────────────────────
     public class ChoiceLevel
     {
-        private static readonly Random Rand = new Random();
-
         public int Level { get; }
         public double MaxHp { get; }
         public double MaxMana { get; }
         public double Xp { get; }
 
-        public ChoiceLevel()
+        // Construtor sem parâmetros: gera level aleatório E calcula os stats.
+        public ChoiceLevel() : this(Random.Shared.Next(1, 11)) { }
+
+        // Construtor por level: calcula os stats com base na fórmula.
+        public ChoiceLevel(int level)
         {
-            Level = Rand.Next(1, 11);   
-            MaxHp = Level * 0.4;         
-            MaxMana = Level * 0.2;       
-            Xp = Level * 0.9;            
+            if (level < 1) level = 1;
+            if (level > 10) level = 10;
+
+            Level = level;
+
+            double baseHp   = 40 + Level * 10;
+            double baseMana = 20 + Level * 6;
+            double baseXp   = 15 + Level * 8;
+
+            MaxHp   = baseHp   + baseHp   * 0.4;
+            MaxMana = baseMana + baseMana * 0.2;
+            Xp      = baseXp   + baseXp   * 0.9;
+        }
+
+        // Construtor completo (mantido para compatibilidade).
+        public ChoiceLevel(int level, double maxHp, double maxMana, double xp)
+        {
+            Level = level;
+            MaxHp = maxHp;
+            MaxMana = maxMana;
+            Xp = xp;
         }
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Monster (nome no singular): classe-base dos inimigos.
-    // Um único fluxo de ataque, com alvo, mana e escudo resolvidos aqui.
+    // MONSTER (base)
     // ─────────────────────────────────────────────────────────────
     public abstract class Monster
     {
-        private static readonly Random Rand = new Random();
-
         public string Name { get; protected set; }
         public int Level { get; private set; }
         public double Hp { get; private set; }
         public double MaxHp { get; private set; }
         public double Mana { get; private set; }
         public double MaxMana { get; private set; }
+        public string Type { get; protected set; }
         public double Xp { get; set; }
 
-        // Somente leitura para fora: ninguém pode substituir a lista inteira.
         public List<Attack> Attacks { get; } = new List<Attack>();
 
         public bool Shield { get; private set; }
         public int ProtectionOfShield { get; private set; }
 
-        // Um só construtor: o monstro nasce com HP/mana cheios.
-        // ProtectionOfShield é calculado sobre MaxHp (não sobre um hp já ferido).
         protected Monster(string name, int level, double maxHp, double maxMana,
-                          double xp = 0, bool shield = false)
+                          double xp = 0, string type = "", bool shield = false)
         {
             Name = name;
             Level = level;
@@ -79,18 +101,18 @@ namespace Monsters
             MaxMana = maxMana;
             Mana = maxMana;
             Xp = xp;
+            Type = type;
             Shield = shield;
             ProtectionOfShield = (int)(maxHp / 4);
         }
 
-        public void AddAttack(string name, int damage, int manaCost = 0, bool grantsShield = false)
+        public void AddAttack(string name, int damage, double manaCost = 0, string type = "", bool grantsShield = false)
         {
-            Attacks.Add(new Attack(name, damage, manaCost, grantsShield));
+            Attacks.Add(new Attack(name, damage, manaCost, type, grantsShield));
         }
 
         private bool CanAfford(Attack attack) => attack.ManaCost <= Mana;
 
-        // ── Fluxo único de uso de ataque (resolve o código duplicado) ──
         private bool TryUseAttack(Attack attack, Monster target)
         {
             if (attack == null)
@@ -159,11 +181,10 @@ namespace Monsters
         {
             Console.WriteLine($"=== {Name} ===");
             Console.WriteLine($"Level: {Level}");
+            Console.WriteLine($"Type: {Type}");
             Console.WriteLine($"HP: {Hp}/{MaxHp}");
-            Console.WriteLine($"XP: {Xp}");
             Console.WriteLine($"Mana: {Mana}/{MaxMana}");
-            Console.WriteLine($"Shield: {(Shield ? "Active" : "Inactive")}");
-            Console.WriteLine($"Shield Protection: {ProtectionOfShield}");
+            Console.WriteLine($"XP: {Xp}");
         }
 
         public virtual void ShowAttacks()
@@ -173,7 +194,6 @@ namespace Monsters
                 Console.WriteLine($"{i + 1}. {Attacks[i].GetDisplay()}");
         }
 
-        // ── Ataque aleatório: valida lista vazia, filtra por mana e aplica dano ──
         public virtual void PerformRandomAttack(Monster target = null)
         {
             Console.WriteLine($"\n=== {Name} is attacking! ===");
@@ -191,7 +211,7 @@ namespace Monsters
                 return;
             }
 
-            Attack chosen = affordable[Rand.Next(affordable.Count)];
+            Attack chosen = affordable[Random.Shared.Next(affordable.Count)];
             TryUseAttack(chosen, target);
         }
 
@@ -199,7 +219,6 @@ namespace Monsters
         {
             if (damage < 0) damage = 0;
 
-            // O escudo consome apenas o dano que realmente bloqueia.
             if (Shield && damage > 0)
             {
                 int blocked = Math.Min(damage, ProtectionOfShield);
@@ -225,18 +244,18 @@ namespace Monsters
         }
     }
 
-    /****************************************************FLOOR 1****************************************************/
-
+    // ─────────────────────────────────────────────────────────────
+    // FLOOR 1
+    // ─────────────────────────────────────────────────────────────
     public class Slime : Monster
     {
-        
-        
         public Slime(ChoiceLevel choice = null)
             : base("Slime",
                    choice?.Level ?? 1,
                    choice?.MaxHp ?? 50,
                    choice?.MaxMana ?? 30,
-                   choice?.Xp ?? 20)
+                   choice?.Xp ?? 20,
+                   type: "Beast")
         {
             AddAttack("Normal Attack", 20, 0);
             AddAttack("Slime Splash", 10, 5);
@@ -247,12 +266,13 @@ namespace Monsters
 
     public class WarriorSkeleton : Monster
     {
-        public WarriorSkeleton(ChoiceLevel choice = null) 
-        : base("WarriorSkeleton",
-        choice?.Level ?? 1,
-        choice?.MaxHp ?? 70,
-        choice?.MaxMana ?? 50,
-        choice?.Xp ?? 45)
+        public WarriorSkeleton(ChoiceLevel choice = null)
+            : base("WarriorSkeleton",
+                   choice?.Level ?? 1,
+                   choice?.MaxHp ?? 70,
+                   choice?.MaxMana ?? 50,
+                   choice?.Xp ?? 45,
+                   type: "Undead")
         {
             AddAttack("Normal Attack", 28, 0);
             AddAttack("Slash", 30, 0);
@@ -263,11 +283,12 @@ namespace Monsters
     public class MageSkeleton : Monster
     {
         public MageSkeleton(ChoiceLevel choice = null)
-         : base("MageSkeleton",
-         choice?.Level ?? 1,
-         choice?.MaxHp ?? 60,
-         choice?.MaxHp ?? 80,
-         choice?.Xp ?? 90)
+            : base("MageSkeleton",
+                   choice?.Level ?? 1,
+                   choice?.MaxHp ?? 60,
+                   choice?.MaxMana ?? 80,
+                   choice?.Xp ?? 90,
+                   type: "Undead")
         {
             AddAttack("Fire Ball", 28, 0);
             AddAttack("Slash", 30, 0);
@@ -278,11 +299,12 @@ namespace Monsters
     public class GiantSpider : Monster
     {
         public GiantSpider(ChoiceLevel choice = null)
-        : base("Giant Spider",
-        choice?.Level?? 1,
-        choice?.MaxHp ?? 90,
-        choice?.MaxHp ?? 50,
-        choice?.Xp ?? 120)
+            : base("Giant Spider",
+                   choice?.Level ?? 1,
+                   choice?.MaxHp ?? 90,
+                   choice?.MaxMana ?? 50,
+                   choice?.Xp ?? 120,
+                   type: "Beast")
         {
             AddAttack("Bite", 45, 0);
             AddAttack("Web", 30, 27);
@@ -290,35 +312,190 @@ namespace Monsters
         }
     }
 
-    /****************************************************FLOOR 2****************************************************/
-
-    public class IceBear : Monster        // PascalCase
+    // ─────────────────────────────────────────────────────────────
+    // FLOOR 2
+    // ─────────────────────────────────────────────────────────────
+    public class IceBear : Monster
     {
         public IceBear(ChoiceLevel choice = null)
-        : base("Ice Bear",
-        choice?.Level ?? 1,
-        choice?.MaxHp ?? 120,
-        choice?.MaxMana ?? 60,
-        choice?.Xp ?? 150)
+            : base("Ice Bear",
+                   choice?.Level ?? 1,
+                   choice?.MaxHp ?? 120,
+                   choice?.MaxMana ?? 60,
+                   choice?.Xp ?? 150,
+                   type: "Water")
         {
             AddAttack("Ice Punch", 50, 0);
             AddAttack("Frost Breath", 40, 20);
-            AddAttack("Ice Shield", 0, 30, grantsShield: true);  // agora tem efeito real
+            AddAttack("Ice Shield", 0, 30, grantsShield: true);
         }
     }
 
     public class IceWizard : Monster
     {
         public IceWizard(ChoiceLevel choice = null)
-         : base("Ice Wizard",
-         choice?.Level ?? 2,
-         choice?.MaxHp ?? 100,
-         choice?.MaxMana ?? 80,
-         choice?.Xp ?? 200)
+            : base("Ice Wizard",
+                   choice?.Level ?? 2,
+                   choice?.MaxHp ?? 100,
+                   choice?.MaxMana ?? 80,
+                   choice?.Xp ?? 200,
+                   type: "Water")
         {
             AddAttack("Frost fire", 60, 0);
-            AddAttack("Inferno", 70, 25);
+            AddAttack("Snow Wool", 70, 25);
             AddAttack("Fireball", 50, 15);
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // MONSTER SPAWNER
+    // ─────────────────────────────────────────────────────────────
+    /// <summary>
+    /// Fábrica de monstros: escolhe aleatoriamente um tipo de monstro
+    /// e gera um level aleatório (1–10) com stats escalados.
+    /// </summary>
+    public static class MonsterSpawner
+    {
+        // Registro de todos os monstros disponíveis.
+        // Para adicionar um novo monstro, basta incluir uma linha aqui.
+        private static readonly Dictionary<string, Func<ChoiceLevel, Monster>> Registry = new()
+        {
+            { "Slime",           c => new Slime(c) },
+            { "WarriorSkeleton", c => new WarriorSkeleton(c) },
+            { "MageSkeleton",    c => new MageSkeleton(c) },
+            { "GiantSpider",     c => new GiantSpider(c) },
+            { "IceBear",         c => new IceBear(c) },
+            { "IceWizard",       c => new IceWizard(c) },
+        };
+
+        /// <summary>
+        /// Sorteia um monstro aleatório com level aleatório (1–10).
+        /// </summary>
+        public static Monster SpawnRandom()
+        {
+            var choice = new ChoiceLevel(); // level + stats aleatórios
+            return CreateRandomMonster(choice);
+        }
+
+        /// <summary>
+        /// Sorteia um monstro aleatório forçando um level específico (1–10).
+        /// </summary>
+        public static Monster SpawnRandom(int forcedLevel)
+        {
+            var choice = new ChoiceLevel(forcedLevel);
+            return CreateRandomMonster(choice);
+        }
+
+        /// <summary>
+        /// Cria um monstro aleatório a partir de um ChoiceLevel já pronto.
+        /// </summary>
+        private static Monster CreateRandomMonster(ChoiceLevel choice)
+        {
+            var keys = Registry.Keys.ToList();
+            string chosen = keys[Random.Shared.Next(keys.Count)];
+            return Registry[chosen](choice);
+        }
+
+        /// <summary>
+        /// Mostra no console TODAS as características específicas de um monstro:
+        /// stats base, estado atual (HP/Mana/Shield) e lista detalhada de ataques.
+        /// </summary>
+        public static void ShowMonsterDetails(Monster monster)
+        {
+            if (monster == null)
+            {
+                Console.WriteLine("Nenhum monstro para mostrar.");
+                return;
+            }
+
+            Console.WriteLine("╔══════════════════════════════════════════════════╗");
+            Console.WriteLine("║              MONSTRO GERADO                      ║");
+            Console.WriteLine("╚══════════════════════════════════════════════════╝");
+
+            Console.WriteLine($"  Nome   : {monster.Name}");
+            Console.WriteLine($"  Level  : {monster.Level}");
+            Console.WriteLine($"  Tipo   : {monster.Type}");
+            Console.WriteLine($"  HP     : {monster.Hp} / {monster.MaxHp}");
+            Console.WriteLine($"  Mana   : {monster.Mana} / {monster.MaxMana}");
+            Console.WriteLine($"  XP     : {monster.Xp}");
+            Console.WriteLine($"  Escudo : {(monster.Shield ? $"Ativo ({monster.ProtectionOfShield})" : "Inativo")}");
+
+            Console.WriteLine();
+            Console.WriteLine("  ───────────── ATAQUES ─────────────");
+            if (monster.Attacks.Count == 0)
+            {
+                Console.WriteLine("  (nenhum ataque)");
+            }
+            else
+            {
+                for (int i = 0; i < monster.Attacks.Count; i++)
+                {
+                    var a = monster.Attacks[i];
+                    string shieldTag = a.GrantsShield ? "  [ESCUDO]" : "";
+                    string typeTag   = string.IsNullOrEmpty(a.Type) ? "" : $" ({a.Type})";
+
+                    Console.WriteLine($"  {i + 1}. {a.Name}{typeTag}{shieldTag}");
+                    Console.WriteLine($"     Dano: {a.Damage}   Mana: {a.ManaCost}");
+                }
+            }
+            Console.WriteLine("  ───────────────────────────────────");
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Atalho: gera um monstro aleatório e já mostra tudo na tela.
+        /// </summary>
+        public static Monster SpawnAndShow()
+        {
+            Monster m = SpawnRandom();
+            ShowMonsterDetails(m);
+            return m;
+        }
+
+        /// <summary>
+        /// Lista todos os monstros registrados (útil para debug).
+        /// </summary>
+        public static IEnumerable<string> ListMonsters() => Registry.Keys;
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // PROGRAMA PRINCIPAL
+    // ─────────────────────────────────────────────────────────────
+    public class Program
+    {
+        public static void Main()
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+            Console.WriteLine("=== Monstros disponíveis ===");
+            foreach (var name in MonsterSpawner.ListMonsters())
+                Console.WriteLine($"  - {name}");
+            Console.WriteLine();
+
+            // 1) Sorteia um monstro totalmente aleatório (tipo + level)
+            Monster a = MonsterSpawner.SpawnAndShow();
+
+            // 2) Sorteia outro, forçando level 5
+            Monster b = MonsterSpawner.SpawnRandom(5);
+            MonsterSpawner.ShowMonsterDetails(b);
+
+            // 3) Batalha rápida entre os dois
+            Console.WriteLine("=== BATALHA ===");
+            int turno = 1;
+            while (a.IsAlive() && b.IsAlive())
+            {
+                Console.WriteLine($"\n--- Turno {turno} ---");
+                a.PerformRandomAttack(b);
+                if (!b.IsAlive()) break;
+
+                b.PerformRandomAttack(a);
+                turno++;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(a.IsAlive()
+                ? $"🏆 {a.Name} venceu a batalha!"
+                : $"🏆 {b.Name} venceu a batalha!");
         }
     }
 }
