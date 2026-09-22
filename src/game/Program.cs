@@ -1,8 +1,8 @@
 using System;
-using BackEndRPG.Character;
+using Character;
 using Monsters;
 
-class Program
+static class Program
 {
     static void Main(string[] args)
     {

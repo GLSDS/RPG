@@ -1,16 +1,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace BackEndRPG.Character
+namespace Character
 {
     // Base class for all character classes
     public class ClassesCaracter
     {
         public string Name { get; set; } = "";
         public int Level { get; set; }
-        private int _hp;
+        private double _hp;
+    
+            private int _maxHp;
+        private double xp;
+            private double maxXp;
         private int _mana;
-        public int Hp 
+            private double _maxMana;
+        public double Hp 
         { 
             get => _hp;
             set => _hp = Math.Max(0, value); // Never goes below 0

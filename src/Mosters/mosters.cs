@@ -114,7 +114,7 @@ namespace Monsters
 
         private bool CanAfford(Attack attack) => attack.ManaCost <= Mana;
 
-        private bool TryUseAttack(Attack attack, Monster target)
+        private bool TryUseAttack(Attack? attack, Monster? target)
         {
             if (attack == null)
                 return false;
@@ -143,7 +143,7 @@ namespace Monsters
             return true;
         }
 
-        public void ChooseAttack(int index, Monster target = null)
+        public void ChooseAttack(int index, Monster? target = null)
         {
             if (index < 0 || index >= Attacks.Count)
             {
@@ -153,9 +153,9 @@ namespace Monsters
             TryUseAttack(Attacks[index], target);
         }
 
-        public void ChooseAttack(string attackName, Monster target = null)
+        public void ChooseAttack(string attackName, Monster? target = null)
         {
-            Attack found = Attacks.FirstOrDefault(a =>
+            Attack? found = Attacks.FirstOrDefault(a =>
                 string.Equals(a.Name, attackName, StringComparison.OrdinalIgnoreCase));
 
             if (found == null)
@@ -167,7 +167,7 @@ namespace Monsters
             TryUseAttack(found, target);
         }
 
-        public void ShowAndChooseAttack(Monster target = null)
+        public void ShowAndChooseAttack(Monster? target = null)
         {
             ShowAttacks();
             Console.Write("\nChoose an attack (number): ");
@@ -195,7 +195,7 @@ namespace Monsters
                 Console.WriteLine($"{i + 1}. {Attacks[i].GetDisplay()}");
         }
 
-        public virtual void PerformRandomAttack(Monster target = null)
+        public virtual void PerformRandomAttack(Monster? target = null)
         {
             Console.WriteLine($"\n=== {Name} is attacking! ===");
 
@@ -250,7 +250,7 @@ namespace Monsters
     // ─────────────────────────────────────────────────────────────
     public class Slime : Monster
     {
-        public Slime(ChoiceLevel choice = null)
+        public Slime(ChoiceLevel? choice = null)
             : base("Slime",
                    choice?.Level ?? 1,
                    choice?.MaxHp ?? 50,
@@ -267,7 +267,7 @@ namespace Monsters
 
     public class WarriorSkeleton : Monster
     {
-        public WarriorSkeleton(ChoiceLevel choice = null)
+        public WarriorSkeleton(ChoiceLevel? choice = null)
             : base("WarriorSkeleton",
                    choice?.Level ?? 1,
                    choice?.MaxHp ?? 70,
@@ -283,7 +283,7 @@ namespace Monsters
 
     public class MageSkeleton : Monster
     {
-        public MageSkeleton(ChoiceLevel choice = null)
+        public MageSkeleton(ChoiceLevel? choice = null)
             : base("MageSkeleton",
                    choice?.Level ?? 1,
                    choice?.MaxHp ?? 60,
@@ -299,7 +299,7 @@ namespace Monsters
 
     public class GiantSpider : Monster
     {
-        public GiantSpider(ChoiceLevel choice = null)
+        public GiantSpider(ChoiceLevel? choice = null)
             : base("Giant Spider",
                    choice?.Level ?? 1,
                    choice?.MaxHp ?? 90,
@@ -320,7 +320,7 @@ namespace Monsters
     //</summary>
     public class IceBear : Monster
     {
-        public IceBear(ChoiceLevel choice = null)
+        public IceBear(ChoiceLevel? choice = null)
             : base("Ice Bear",
                    choice?.Level ?? 1,
                    choice?.MaxHp ?? 120,
@@ -336,7 +336,7 @@ namespace Monsters
 
     public class IceWizard : Monster
     {
-        public IceWizard(ChoiceLevel choice = null)
+        public IceWizard(ChoiceLevel? choice = null)
             : base("Ice Wizard",
                    choice?.Level ?? 2,
                    choice?.MaxHp ?? 100,
@@ -354,9 +354,6 @@ namespace Monsters
     // MONSTER SPAWNER
     // ─────────────────────────────────────────────────────────────
     //<summary>
-    /// Fábrica de monstros: escolhe aleatoriamente um tipo de monstro
-    /// e gera um level aleatório (1–10) com stats escalados.
-    ///  </summary>
     public static class MonsterSpawner
     {
         // Registro de todos os monstros disponíveis.
@@ -389,8 +386,6 @@ namespace Monsters
             return CreateRandomMonster(choice);
         }
 
-        
-        /// Cria um monstro aleatório a partir de um ChoiceLevel já pronto.
         
         private static Monster CreateRandomMonster(ChoiceLevel choice)
         {
@@ -455,9 +450,7 @@ namespace Monsters
             return m;
         }
 
-        
-        /// Lista todos os monstros registrados (útil para debug).
-        
+                
         public static IEnumerable<string> ListMonsters() => Registry.Keys;
     }
 
