@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Random = System.Random;
+using Array = System.Array;
 
 namespace Monsters
 {
@@ -312,9 +313,11 @@ namespace Monsters
         }
     }
 
+    //<summary>
     // ─────────────────────────────────────────────────────────────
     // FLOOR 2
     // ─────────────────────────────────────────────────────────────
+    //</summary>
     public class IceBear : Monster
     {
         public IceBear(ChoiceLevel choice = null)
@@ -350,10 +353,10 @@ namespace Monsters
     // ─────────────────────────────────────────────────────────────
     // MONSTER SPAWNER
     // ─────────────────────────────────────────────────────────────
-    /// <summary>
+    //<summary>
     /// Fábrica de monstros: escolhe aleatoriamente um tipo de monstro
     /// e gera um level aleatório (1–10) com stats escalados.
-    /// </summary>
+    ///  </summary>
     public static class MonsterSpawner
     {
         // Registro de todos os monstros disponíveis.
@@ -386,9 +389,9 @@ namespace Monsters
             return CreateRandomMonster(choice);
         }
 
-        /// <summary>
+        
         /// Cria um monstro aleatório a partir de um ChoiceLevel já pronto.
-        /// </summary>
+        
         private static Monster CreateRandomMonster(ChoiceLevel choice)
         {
             var keys = Registry.Keys.ToList();
@@ -452,16 +455,16 @@ namespace Monsters
             return m;
         }
 
-        /// <summary>
+        
         /// Lista todos os monstros registrados (útil para debug).
-        /// </summary>
+        
         public static IEnumerable<string> ListMonsters() => Registry.Keys;
     }
 
     // ─────────────────────────────────────────────────────────────
-    // PROGRAMA PRINCIPAL
+    // PROGRAMA DE TESTE
     // ─────────────────────────────────────────────────────────────
-    public class Program
+    public static class Program
     {
         public static void Main()
         {
