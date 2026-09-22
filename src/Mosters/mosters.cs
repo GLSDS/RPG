@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Random = System.Random;
-using Array = System.Array;
+using System;
 
 namespace Monsters
 {
@@ -54,13 +51,13 @@ namespace Monsters
 
             Level = level;
 
-            double baseHp   = 40 + Level * 10;
+            double baseHp = 40 + Level * 10;
             double baseMana = 20 + Level * 6;
-            double baseXp   = 15 + Level * 8;
+            double baseXp = 15 + Level * 8;
 
-            MaxHp   = baseHp   + baseHp   * 0.4;
+            MaxHp = baseHp + baseHp * 0.4;
             MaxMana = baseMana + baseMana * 0.2;
-            Xp      = baseXp   + baseXp   * 0.9;
+            Xp = baseXp + baseXp * 0.9;
         }
 
         // Construtor completo (mantido para compatibilidade).
@@ -87,7 +84,7 @@ namespace Monsters
         public string Type { get; protected set; }
         public double Xp { get; set; }
 
-        public List<Attack> Attacks { get; } = new List<Attack>();
+        public List<Attack> Attacks { get; } = [];
 
         public bool Shield { get; private set; }
         public int ProtectionOfShield { get; private set; }
@@ -386,7 +383,7 @@ namespace Monsters
             return CreateRandomMonster(choice);
         }
 
-        
+
         private static Monster CreateRandomMonster(ChoiceLevel choice)
         {
             var keys = Registry.Keys.ToList();
@@ -430,7 +427,7 @@ namespace Monsters
                 {
                     var a = monster.Attacks[i];
                     string shieldTag = a.GrantsShield ? "  [ESCUDO]" : "";
-                    string typeTag   = string.IsNullOrEmpty(a.Type) ? "" : $" ({a.Type})";
+                    string typeTag = string.IsNullOrEmpty(a.Type) ? "" : $" ({a.Type})";
 
                     Console.WriteLine($"  {i + 1}. {a.Name}{typeTag}{shieldTag}");
                     Console.WriteLine($"     Dano: {a.Damage}   Mana: {a.ManaCost}");
@@ -450,7 +447,7 @@ namespace Monsters
             return m;
         }
 
-                
+
         public static IEnumerable<string> ListMonsters() => Registry.Keys;
     }
 

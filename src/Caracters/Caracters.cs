@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
 
-namespace Character
+namespace caracter
 {
     // Base class for all character classes
     public class ClassesCaracter
@@ -9,14 +8,14 @@ namespace Character
         public string Name { get; set; } = "";
         public int Level { get; set; }
         private double _hp;
-    
-            private int _maxHp;
-        private double xp;
-            private double maxXp;
+
+        private readonly int _maxHp;
+        private readonly double xp;
+        private readonly double maxXp;
         private int _mana;
-            private double _maxMana;
-        public double Hp 
-        { 
+        private readonly double _maxMana;
+        public double Hp
+        {
             get => _hp;
             set => _hp = Math.Max(0, value); // Never goes below 0
         }
@@ -42,7 +41,7 @@ namespace Character
             Console.WriteLine($"XP: {Xp}");
             Console.WriteLine($"Status: {(IsAlive ? "🟢 Vivo" : "💀 Morto")}");
             Console.WriteLine();
-            
+
             if (CharacterSkills != null)
             {
                 CharacterSkills.DisplayStats();
@@ -54,9 +53,9 @@ namespace Character
         {
             Xp += amount;
             int xpNeeded = Level * 100;
-            
+
             Console.WriteLine($"{Name} ganhou {amount} XP!");
-            
+
             while (Xp >= xpNeeded)
             {
                 LevelUp();
@@ -176,9 +175,9 @@ namespace Character
 
             Hp -= damage;
             if (Hp < 0) Hp = 0;
-            
+
             Console.WriteLine($"{Name} recebeu {damage} de dano! HP: {Hp}/{MaxHp}");
-            
+
             if (!IsAlive)
             {
                 Console.WriteLine($"💀 {Name} foi derrotado!");
@@ -247,19 +246,19 @@ namespace Character
             Console.WriteLine($"Description: {PassiveDescription}");
             Console.WriteLine($"Effect: {PassiveEffect}%");
             Console.WriteLine();
-            
+
             Console.WriteLine($"Offensive 1: {Offensive1}");
             Console.WriteLine($"  Damage: {Offensive1Damage}, Mana Cost: {Offensive1ManaCost}");
             Console.WriteLine();
-            
+
             Console.WriteLine($"Offensive 2: {Offensive2}");
             Console.WriteLine($"  Damage: {Offensive2Damage}, Mana Cost: {Offensive2ManaCost}");
             Console.WriteLine();
-            
+
             Console.WriteLine($"Offensive 3: {Offensive3}");
             Console.WriteLine($"  Damage: {Offensive3Damage}, Mana Cost: {Offensive3ManaCost}");
             Console.WriteLine();
-            
+
             if (!string.IsNullOrEmpty(Artifact))
             {
                 Console.WriteLine($"Artifact: {Artifact}");
@@ -570,16 +569,16 @@ namespace Character
             Console.WriteLine("║ 5 - ✨ Clérigo              ║");
             Console.WriteLine("╚═══════════════════════════════╝");
             Console.Write("Opção: ");
-            
+
             int choice;
             while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 5)
             {
                 Console.Write("Opção inválida! Escolha 1-5: ");
             }
-            
+
             Console.Write("Digite o nome do personagem: ");
             string name = Console.ReadLine() ?? "";
-            
+
             ClassesCaracter character = choice switch
             {
                 1 => new Mage(),
@@ -589,7 +588,7 @@ namespace Character
                 5 => new Cleric(),
                 _ => throw new ArgumentException("Classe inválida!")
             };
-            
+
             character.Name = name;
             return character;
         }
