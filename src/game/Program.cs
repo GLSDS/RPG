@@ -1,5 +1,7 @@
-using caracter;
-
+using Caracters;
+using Monsters;
+using System;
+using System.Collections.Generic;
 namespace Program
 {
     static class Program
