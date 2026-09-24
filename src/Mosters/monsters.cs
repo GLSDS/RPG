@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using floor1;
 using floor2;
-using type_element;
+using type;
 using Random = System.Random;
 
 
@@ -19,15 +19,15 @@ namespace Monsters
         public string Name { get; }
         public int Damage { get; }
         public double ManaCost { get; }
-        public string Type { get; private set; }
+        public ElementType? Element { get; }
         public bool GrantsShield { get; }
 
-        public Attack(string name, int damage, double manaCost = 0, string type = "", bool grantsShield = false)
+        public Attack(string name, int damage, double manaCost = 0, ElementType? element = null, bool grantsShield = false)
         {
             Name = name;
             Damage = damage;
             ManaCost = manaCost;
-            Type = type;
+            Element = element;
             GrantsShield = grantsShield;
         }
 
@@ -89,7 +89,8 @@ namespace Monsters
         public double MaxHp { get; private set; }
         public double Mana { get; private set; }
         public double MaxMana { get; private set; }
-        public string Type { get; protected set; }
+        public string Type { get; protected set; } = "Beast";
+        public ElementType Element { get; protected set; }
         public double Xp { get; set; }
 
         public List<Attack> Attacks { get; } = [];
@@ -98,7 +99,7 @@ namespace Monsters
         public int ProtectionOfShield { get; private set; }
 
         protected Monster(string name, int level, double maxHp, double maxMana,
-                          double xp = 0, string type = "", bool shield = false)
+                          double xp = 0, string type = "Beast", ElementType element = ElementType.Fire, bool shield = false)
         {
             Name = name;
             Level = level;
@@ -108,13 +109,14 @@ namespace Monsters
             Mana = maxMana;
             Xp = xp;
             Type = type;
+            Element = element;
             Shield = shield;
             ProtectionOfShield = (int)(maxHp / 4);
         }
 
-        public void AddAttack(string name, int damage, double manaCost = 0, string type = "", bool grantsShield = false)
+        public void AddAttack(string name, int damage, double manaCost = 0, ElementType? element = null, bool grantsShield = false)
         {
-            Attacks.Add(new Attack(name, damage, manaCost, type, grantsShield));
+            Attacks.Add(new Attack(name, damage, manaCost, element, grantsShield));
         }
 
         private bool CanAfford(Attack attack) => attack.ManaCost <= Mana;
@@ -188,6 +190,7 @@ namespace Monsters
             Console.WriteLine($"=== {Name} ===");
             Console.WriteLine($"Level: {Level}");
             Console.WriteLine($"Type: {Type}");
+            Console.WriteLine($"Element: {Element}");
             Console.WriteLine($"HP: {Hp}/{MaxHp}");
             Console.WriteLine($"Mana: {Mana}/{MaxMana}");
             Console.WriteLine($"XP: {Xp}");

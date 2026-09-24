@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace type_element
+namespace type
 {
     public enum ElementType
     {
@@ -9,7 +9,7 @@ namespace type_element
         Water,
         Plant,      // equivalente a "Ground"
         Air,        // equivalente a "Flying"
-        Lightning,  // equivalente a "Electric"
+        Eletric,  
         Ice,
         Light,
         Dark,
@@ -38,10 +38,10 @@ namespace type_element
             // Water
             AddEffectiveness(ElementType.Water, ElementType.Fire, 2.0);
             AddEffectiveness(ElementType.Water, ElementType.Plant, 2.0);
-            AddEffectiveness(ElementType.Water, ElementType.Lightning, 0.5);
+            AddEffectiveness(ElementType.Water, ElementType.Eletric, 0.5);
 
             // Plant
-            AddEffectiveness(ElementType.Plant, ElementType.Lightning, 2.0);
+            AddEffectiveness(ElementType.Plant, ElementType.Eletric, 2.0);
             AddEffectiveness(ElementType.Plant, ElementType.Air, 0.0); // Imune
             AddEffectiveness(ElementType.Plant, ElementType.Fire, 2.0);
 
@@ -50,10 +50,10 @@ namespace type_element
             AddEffectiveness(ElementType.Air, ElementType.Fight, 2.0);
             AddEffectiveness(ElementType.Air, ElementType.Bug, 2.0);
 
-            // Lightning
-            AddEffectiveness(ElementType.Lightning, ElementType.Water, 2.0);
-            AddEffectiveness(ElementType.Lightning, ElementType.Air, 2.0);
-            AddEffectiveness(ElementType.Lightning, ElementType.Plant, 0.0); // Imune
+            // Eletric
+            AddEffectiveness(ElementType.Eletric, ElementType.Water, 2.0);
+            AddEffectiveness(ElementType.Eletric, ElementType.Air, 2.0);
+            AddEffectiveness(ElementType.Eletric, ElementType.Plant, 0.0); // Imune
 
             // Ice
             AddEffectiveness(ElementType.Ice, ElementType.Air, 2.0);
@@ -82,6 +82,7 @@ namespace type_element
             // Poison
             AddEffectiveness(ElementType.Poison, ElementType.Plant, 2.0);
             AddEffectiveness(ElementType.Poison, ElementType.Fire, 0.5);
+            AddEffectiveness(ElementType.Poison, ElementType.Eletric, 0.5);
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using type_element;
+using type;
 
 namespace Caracters{
 
