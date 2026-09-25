@@ -1,29 +1,37 @@
 {
   "format": 1,
   "restore": {
-    "/Users/250413/RPG/RPG/Back-end_RPG.csproj": {}
+    "C:\\Users\\Utilizador\\OneDrive\\RPG\\Back-end_RPG.csproj": {}
   },
   "projects": {
-    "/Users/250413/RPG/RPG/Back-end_RPG.csproj": {
+    "C:\\Users\\Utilizador\\OneDrive\\RPG\\Back-end_RPG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/250413/RPG/RPG/Back-end_RPG.csproj",
+        "projectUniqueName": "C:\\Users\\Utilizador\\OneDrive\\RPG\\Back-end_RPG.csproj",
         "projectName": "Back-end_RPG",
-        "projectPath": "/Users/250413/RPG/RPG/Back-end_RPG.csproj",
-        "packagesPath": "/Users/250413/.nuget/packages/",
-        "outputPath": "/Users/250413/RPG/RPG/obj/",
+        "projectPath": "C:\\Users\\Utilizador\\OneDrive\\RPG\\Back-end_RPG.csproj",
+        "packagesPath": "C:\\Users\\Utilizador\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Utilizador\\OneDrive\\RPG\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/250413/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Utilizador\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {}
           }
@@ -32,10 +40,17 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "imports": [
             "net461",
@@ -53,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/Users/250413/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,6 +1,6 @@
 using System;
 using Monsters;
-using type;
+using type_element;
 
 namespace floor2
 {
@@ -19,11 +19,11 @@ namespace floor2
                    choice?.MaxMana ?? 40,
                    choice?.Xp ?? 300,
                    type: "Beast",
-                   element: ElementType.Ice)
+                   element: TypeElement.Ice)
         {
-            AddAttack("Ice Slam", 80, 0, ElementType.Ice);
-            AddAttack("Frost Punch", 60, 10, ElementType.Fight);
-            AddAttack("Ice Shield", 0, 30, ElementType.Ice, grantsShield: true);
+            AddAttack("Ice Slam", 80, 0, TypeElement.Ice);
+            AddAttack("Frost Punch", 60, 10, TypeElement.Fight);
+            AddAttack("Ice Shield", 0, 30, TypeElement.Ice, grantsShield: true);
         }
     }
 
@@ -37,11 +37,11 @@ namespace floor2
                    choice?.MaxMana ?? 60,
                    choice?.Xp ?? 150,
                    type: "Beast",
-                   element: ElementType.Ice)
+                   element: TypeElement.Ice)
         {
-            AddAttack("Ice Punch", 50, 0, ElementType.Ice);
-            AddAttack("Frost Breath", 40, 20, ElementType.Ice);
-            AddAttack("tornado", 0, 30, ElementType.Air);
+            AddAttack("Ice Punch", 50, 0, TypeElement.Ice);
+            AddAttack("Frost Breath", 40, 20, TypeElement.Ice);
+            AddAttack("tornado", 0, 30, TypeElement.Air);
         }
     }
 

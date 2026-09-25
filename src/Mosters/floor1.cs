@@ -1,7 +1,7 @@
 using System;
 using Monsters;
 using System.Collections.Generic;
-using type;
+using type_element;
 
 namespace floor1
 {
@@ -14,12 +14,12 @@ namespace floor1
                    choice?.MaxMana ?? 30,
                    choice?.Xp ?? 20,
                    type: "Beast",
-                   element: ElementType.Poison)   // Slime cospe veneno
+                   element: TypeElement.Poison)   // Slime cospe veneno
         {
-            AddAttack("Normal Attack", 20, 0);
-            AddAttack("Slime Splash", 10, 5);
-            AddAttack("Bouncy", 15, 10);
-            AddAttack("Poison Spit", 25, 20);
+            AddAttack("Normal Attack", 20, 0, TypeElement.Water);
+            AddAttack("Slime Splash", 10, 5, TypeElement.Water);
+            AddAttack("Bouncy", 15, 10, TypeElement.Poison);
+            AddAttack("Poison Spit", 25, 10, TypeElement.Poison);
         }
     }
 
@@ -32,11 +32,11 @@ namespace floor1
                    choice?.MaxMana ?? 50,
                    choice?.Xp ?? 45,
                    type: "Undead",
-                   element: ElementType.Dark)    // morto-vivo → trevas
+                   element: TypeElement.Dark)    // morto-vivo → trevas
         {
             AddAttack("Normal Attack", 28, 0);
-            AddAttack("Slash", 30, 0);
-            AddAttack("Shield Bash Combo", 30, 0);
+            AddAttack("Slash", 30, 0, TypeElement.Fight);
+            AddAttack("Shield Bash Combo", 30, 20, TypeElement.Fight, true);
         }
     }
 
@@ -49,11 +49,11 @@ namespace floor1
                    choice?.MaxMana ?? 80,
                    choice?.Xp ?? 90,
                    type: "Undead",
-                   element: ElementType.Fire)    // lança Fire Ball
+                   element: TypeElement.Dark)
         {
-            AddAttack("Fire Ball", 28, 0);
-            AddAttack("Slash", 30, 0);
-            AddAttack("Shield Bash Combo", 30, 0);
+            AddAttack("Fire Ball", 28, 0, TypeElement.Fire);
+            AddAttack("Pump", 30, 0, TypeElement.Fire);
+            AddAttack("Necromancy", 80, 50, TypeElement.Dark);
         }
     }
 
@@ -66,11 +66,11 @@ namespace floor1
                    choice?.MaxMana ?? 50,
                    choice?.Xp ?? 120,
                    type: "Beast",
-                   element: ElementType.Poison)  // aranha peçonhenta
+                   element: TypeElement.Poison)  // aranha peçonhenta
         {
             AddAttack("Bite", 45, 0);
-            AddAttack("Web", 30, 27);
-            AddAttack("Poison Attack", 48, 30);
+            AddAttack("Web", 30, 27, TypeElement.Bug);
+            AddAttack("Poison Attack", 48, 30, TypeElement.Poison);
         }
     }
 }

@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using floor1;
 using floor2;
-using type;
+using Characters;
+using type_element;
 using Random = System.Random;
 
 
@@ -14,69 +15,12 @@ namespace Monsters
     // ─────────────────────────────────────────────────────────────
     // ATTACK
     // ─────────────────────────────────────────────────────────────
-    public class Attack
-    {
-        public string Name { get; }
-        public int Damage { get; }
-        public double ManaCost { get; }
-        public ElementType? Element { get; }
-        public bool GrantsShield { get; }
-
-        public Attack(string name, int damage, double manaCost = 0, ElementType? element = null, bool grantsShield = false)
-        {
-            Name = name;
-            Damage = damage;
-            ManaCost = manaCost;
-            Element = element;
-            GrantsShield = grantsShield;
-        }
-
-        public string GetDisplay()
-        {
-            string suffix = ManaCost > 0 ? $" (Mana: {ManaCost})" : "";
-            return $"{Name}{suffix}";
-        }
-    }
+    
 
     // ─────────────────────────────────────────────────────────────
     // CHOICE LEVEL
     // ─────────────────────────────────────────────────────────────
-    public class ChoiceLevel
-    {
-        public int Level { get; }
-        public double MaxHp { get; }
-        public double MaxMana { get; }
-        public double Xp { get; }
-
-        // Construtor sem parâmetros: gera level aleatório E calcula os stats.
-        public ChoiceLevel() : this(Random.Shared.Next(1, 11)) { }
-
-        // Construtor por level: calcula os stats com base na fórmula.
-        public ChoiceLevel(int level)
-        {
-            if (level < 1) level = 1;
-            if (level > 10) level = 10;
-
-            Level = level;
-
-            double baseHp = 40 + Level * 10;
-            double baseMana = 20 + Level * 6;
-            double baseXp = 15 + Level * 8;
-
-            MaxHp = baseHp + baseHp * 0.4;
-            MaxMana = baseMana + baseMana * 0.2;
-            Xp = baseXp + baseXp * 0.9;
-        }
-
-        // Construtor completo (mantido para compatibilidade).
-        public ChoiceLevel(int level, double maxHp, double maxMana, double xp)
-        {
-            Level = level;
-            MaxHp = maxHp;
-            MaxMana = maxMana;
-            Xp = xp;
-        }
-    }
+    
 
     // ─────────────────────────────────────────────────────────────
     // MONSTER (base)
@@ -89,17 +33,17 @@ namespace Monsters
         public double MaxHp { get; private set; }
         public double Mana { get; private set; }
         public double MaxMana { get; private set; }
-        public ElementType Type { get; protected set; } = "Beast";
-        public ElementType Element { get; protected set; }
+        public String Type { get; protected set; } = "Beast";
+        public TypeElement Element { get; protected set; }
         public double Xp { get; set; }
 
-        public List<Attack> Attacks { get; } = [];
+        public List<AttackMonster> Attacks { get; } = [];
 
         public bool Shield { get; private set; }
         public int ProtectionOfShield { get; private set; }
 
         protected Monster(string name, int level, double maxHp, double maxMana,
-                          double xp = 0, string type = "Beast", ElementType element = ElementType.Fire, bool shield = false)
+                          double xp = 0, string type = "Beast", TypeElement element = TypeElement.Fire, bool shield = false)
         {
             Name = name;
             Level = level;
@@ -114,14 +58,14 @@ namespace Monsters
             ProtectionOfShield = (int)(maxHp / 4);
         }
 
-        public void AddAttack(string name, int damage, double manaCost = 0, ElementType? element = null, bool grantsShield = false)
+        public void AddAttack(string name, int damage, double manaCost = 0, TypeElement? element = null, bool grantsShield = false)
         {
-            Attacks.Add(new Attack(name, damage, manaCost, element, grantsShield));
+            Attacks.Add(new AttackMonster(name, damage, manaCost, element, grantsShield));
         }
 
-        private bool CanAfford(Attack attack) => attack.ManaCost <= Mana;
+        private bool CanAfford(AttackMonster attack) => attack.ManaCost <= Mana;
 
-        private bool TryUseAttack(Attack? attack, Monster? target)
+        private bool TryUseAttack(AttackMonster? attack, Monster? target)
         {
             if (attack == null)
                 return false;
@@ -150,6 +94,34 @@ namespace Monsters
             return true;
         }
 
+        private bool TryUseAttack(AttackMonster attack, CharacterClass target)
+        {
+            if (!CanAfford(attack))
+            {
+                Console.WriteLine($"Not enough mana! Need {attack.ManaCost}, have {Mana}");
+                return false;
+            }
+
+            Mana -= attack.ManaCost;
+            Console.WriteLine($"{Name} used {attack.Name}!");
+
+            if (attack.GrantsShield)
+            {
+                Shield = true;
+                Console.WriteLine($"{Name} raised a shield! ({ProtectionOfShield} protection)");
+                return true;
+            }
+
+            if (attack.Damage > 0)
+            {
+                var effectiveness = new ElementTypeEffectiveness();
+                var multiplier = effectiveness.GetEffectiveness(attack.Element ?? Element, target.Element);
+                target.TakeDamage((int)Math.Ceiling(attack.Damage * multiplier));
+            }
+
+            return true;
+        }
+
         public void ChooseAttack(int index, Monster? target = null)
         {
             if (index < 0 || index >= Attacks.Count)
@@ -162,7 +134,7 @@ namespace Monsters
 
         public void ChooseAttack(string attackName, Monster? target = null)
         {
-            Attack? found = Attacks.FirstOrDefault(a =>
+            AttackMonster? found = Attacks.FirstOrDefault(a =>
                 string.Equals(a.Name, attackName, StringComparison.OrdinalIgnoreCase));
 
             if (found == null)
@@ -220,7 +192,23 @@ namespace Monsters
                 return;
             }
 
-            Attack chosen = affordable[Random.Shared.Next(affordable.Count)];
+            AttackMonster chosen = affordable[Random.Shared.Next(affordable.Count)];
+            TryUseAttack(chosen, target);
+        }
+
+        public virtual void PerformRandomAttack(CharacterClass target)
+        {
+            if (!target.IsAlive)
+                return;
+
+            var affordable = Attacks.Where(CanAfford).ToList();
+            if (affordable.Count == 0)
+            {
+                Console.WriteLine($"{Name} has no mana for any attack and skips the turn!");
+                return;
+            }
+
+            var chosen = affordable[Random.Shared.Next(affordable.Count)];
             TryUseAttack(chosen, target);
         }
 

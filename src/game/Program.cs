@@ -1,7 +1,7 @@
-using Caracters;
+using Characters;
 using Monsters;
+using floor1;
 using System;
-using System.Collections.Generic;
 namespace Program
 {
     static class Program
@@ -19,7 +19,8 @@ namespace Program
             // Create player character
             var player = CharacterFactory.CreateCharacter();
 
-            Console.Clear();
+            if (!Console.IsOutputRedirected)
+                Console.Clear();
             Console.WriteLine("╔═══════════════════════════════════╗");
             Console.WriteLine("║    PERSONAGEM CRIADO COM SUCESSO  ║");
             Console.WriteLine("╚═══════════════════════════════════╝");
@@ -28,12 +29,7 @@ namespace Program
             player.DisplayStats();
 
             // Create an enemy
-            var enemy = new Barbarian();
-            enemy.Name = "Orc Warlord";
-            enemy.Level = 2;
-            enemy.MaxHp = 400;
-            enemy.Hp = 400;
-            enemy.Damage = 30;
+            Monster enemy = new WarriorSkeleton(new ChoiceLevel(2));
 
             Console.WriteLine("\n╔═══════════════════════════════════════════════════╗");
             Console.WriteLine("║              ⚔️ SIMULAÇÃO DE BATALHA            ║");
@@ -48,7 +44,7 @@ namespace Program
             Random rand = new();
             int turn = 1;
 
-            while (player.IsAlive && enemy.IsAlive)
+            while (player.IsAlive && enemy.IsAlive())
             {
                 Console.WriteLine($"\n--- Turno {turn} ---");
                 Console.WriteLine($"🧙 {player.Name}: HP {player.Hp}/{player.MaxHp} | Mana {player.Mana}");
@@ -75,11 +71,12 @@ namespace Program
                             break;
                         case "2":
                             // Random skill
-                            string[] skills = [
-                                player.CharacterSkills.Offensive1,
-                            player.CharacterSkills.Offensive2,
-                            player.CharacterSkills.Offensive3
-                            ];
+                            string[] skills = player.Attacks.Select(attack => attack.Name).ToArray();
+                            if (skills.Length == 0)
+                            {
+                                Console.WriteLine("Este personagem não possui ataques.");
+                                break;
+                            }
                             string skill = skills[rand.Next(skills.Length)];
                             player.Attack(enemy, skill);
                             break;
@@ -96,33 +93,28 @@ namespace Program
                     }
 
                     // Gain XP if enemy dies
-                    if (!enemy.IsAlive)
+                    if (!enemy.IsAlive())
                     {
-                        player.GainXp(50);
+                        player.GainXp((int)enemy.Xp);
                     }
                 }
                 else
                 {
                     // Enemy attacks
                     Console.WriteLine($"👹 {enemy.Name} ataca!");
-                    string[] enemySkills = [
-                        enemy.CharacterSkills.Offensive1,
-                    enemy.CharacterSkills.Offensive2,
-                    enemy.CharacterSkills.Offensive3
-                    ];
-                    string enemySkill = enemySkills[rand.Next(enemySkills.Length)];
-                    enemy.Attack(player, enemySkill);
+                    enemy.PerformRandomAttack(player);
                 }
 
                 playerTurn = !playerTurn;
                 turn++;
 
-                if (player.IsAlive && enemy.IsAlive)
+                if (player.IsAlive && enemy.IsAlive())
                 {
                     Console.WriteLine("\nPressione Enter para continuar...");
                     Console.ReadLine();
                 }
-                Console.Clear();
+                if (!Console.IsOutputRedirected)
+                    Console.Clear();
             }
 
         }
