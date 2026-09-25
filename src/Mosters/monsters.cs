@@ -89,7 +89,7 @@ namespace Monsters
         public double MaxHp { get; private set; }
         public double Mana { get; private set; }
         public double MaxMana { get; private set; }
-        public string Type { get; protected set; } = "Beast";
+        public ElementType Type { get; protected set; } = "Beast";
         public ElementType Element { get; protected set; }
         public double Xp { get; set; }
 
