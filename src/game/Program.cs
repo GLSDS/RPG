@@ -1,6 +1,7 @@
 using Characters;
 using Monsters;
 using floor1;
+using floor2;
 using System;
 namespace Program
 {

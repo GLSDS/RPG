@@ -6,7 +6,7 @@ namespace Characters
     {
         public static CharacterClass CreateCharacter()
         {
-            Console.WriteLine("Escolha sua classe: 1-Mage, 2-Barbarian, 3-Warrior, 4-Rogue, 5-Cleric");
+            Console.WriteLine("Escolha sua classe:\n 1-Mage\n 2-Barbarian\n 3-Warrior\n 4-Rogue\n 5-Cleric\n");
             string classChoice = Console.ReadLine() ?? "3";
 
             Console.Write("Nome do personagem: ");
@@ -16,6 +16,7 @@ namespace Characters
             {
                 "1" or "mage"      => new Mage(name),
                 "2" or "barbarian" => new Barbarian(name),
+                "3" or "warrior"    => new Warrior(name),
                 "4" or "rogue"     => new Rogue(name),
                 "5" or "cleric"    => new Cleric(name),
                 _                  => new Warrior(name)

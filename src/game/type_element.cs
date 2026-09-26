@@ -45,7 +45,7 @@ namespace type_element
 
         // Plant
         AddEffectiveness(TypeElement.Plant, TypeElement.Lightning, 2.0);
-        AddEffectiveness(TypeElement.Plant, TypeElement.Air, 0.0);
+        AddEffectiveness(TypeElement.Plant, TypeElement.Air, 1.5);
         AddEffectiveness(TypeElement.Plant, TypeElement.Fire, 2.0);
 
         // Air
@@ -73,13 +73,13 @@ namespace type_element
         AddEffectiveness(TypeElement.Dark, TypeElement.Light, 2.0);
         AddEffectiveness(TypeElement.Dark, TypeElement.Fight, 0.5);
         AddEffectiveness(TypeElement.Dark, TypeElement.Bug, 2.0);
-        AddEffectiveness(TypeElement.Dark, TypeElement.Normal, 2.0);
+        AddEffectiveness(TypeElement.Dark, TypeElement.Air, 2.0);
 
         // Fight
         AddEffectiveness(TypeElement.Fight, TypeElement.Dark, 2.0);
         AddEffectiveness(TypeElement.Fight, TypeElement.Ice, 2.0);
         AddEffectiveness(TypeElement.Fight, TypeElement.Poison, 0.5);
-        AddEffectiveness(TypeElement.Fight, TypeElement.Normal, 2.0);
+        AddEffectiveness(TypeElement.Fight, TypeElement.Normal, 1.5);
 
         // Bug
         AddEffectiveness(TypeElement.Bug, TypeElement.Dark, 2.0);
