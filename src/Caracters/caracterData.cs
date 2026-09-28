@@ -17,7 +17,6 @@ namespace Characters
         public int MaxHp { get; set; }
         public int Mana { get; set; }
         public int MaxMana { get; set; }
-        public int Damage { get; set; }
         public double Xp { get; set; }
         public double MaxXp { get; set; } = 100;
         public TypeElement Element { get; set; } = TypeElement.Normal;
@@ -37,7 +36,6 @@ namespace Characters
             MaxHp = maxHp;
             Mana = mana;
             MaxMana = maxMana;
-            Damage = damage;
             Xp = xp;
             MaxXp = maxXp;
             Element = element;
