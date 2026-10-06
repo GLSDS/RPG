@@ -1,8 +1,6 @@
 using Characters;
 using Monsters;
 using floor1;
-using floor2;
-using System;
 namespace Program
 {
     static class Program
@@ -59,7 +57,8 @@ namespace Program
                     Console.WriteLine("1 - Ataque Básico");
                     Console.WriteLine("2 - Usar Habilidade (Aleatória)");
                     Console.WriteLine("3 - Curar");
-                    Console.WriteLine("4 - Mostrar Stats");
+                    Console.WriteLine("4 - Inventory");
+                    Console.WriteLine("5 - Mostrar Stats");
                     Console.Write("Opção: ");
 
                     string action = Console.ReadLine() ?? "";
@@ -85,6 +84,26 @@ namespace Program
                             player.Heal(50);
                             break;
                         case "4":
+                            var inventoryProperty = player.GetType().GetProperty("Inventory");
+                            if (inventoryProperty is not null)
+                            {
+                                var inventory = inventoryProperty.GetValue(player);
+                                var listarMethod = inventory?.GetType().GetMethod("Listar");
+                                if (inventory is not null && listarMethod is not null)
+                                {
+                                    listarMethod.Invoke(inventory, null);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Inventário indisponível para este personagem.");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Inventário indisponível para este personagem.");
+                            }
+                            break;
+                        case "5":
                             player.DisplayStats();
                             break;
                         default:
