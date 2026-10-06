@@ -16,7 +16,6 @@ namespace Characters
         public int MaxHp => Data.MaxHp;
         public int Mana { get => Data.Mana; private set => Data.Mana = value; }
         public int MaxMana => Data.MaxMana;
-        public int Damage => Data.Damage;
         public double Xp { get => Data.Xp; private set => Data.Xp = value; }
         public double MaxXp => Data.MaxXp;
         public TypeElement Element => Data.Element;
@@ -44,12 +43,6 @@ namespace Characters
             if (target == null || !target.IsAlive)
                 return;
 
-            if (string.Equals(attackName, "Ataque Básico", StringComparison.OrdinalIgnoreCase))
-            {
-                target.TakeDamage(Damage);
-                return;
-            }
-
             var attack = FindAttack(attackName);
             if (attack == null || !CanUse(attack))
                 return;
@@ -69,12 +62,6 @@ namespace Characters
         {
             if (target == null || !target.IsAlive())
                 return;
-
-            if (string.Equals(attackName, "Ataque Básico", StringComparison.OrdinalIgnoreCase))
-            {
-                target.TakeDamage(Damage);
-                return;
-            }
 
             var attack = FindAttack(attackName);
             if (attack == null || !CanUse(attack))
@@ -132,7 +119,6 @@ namespace Characters
             Console.WriteLine($"Nível: {Level}");
             Console.WriteLine($"HP: {Hp}/{MaxHp}");
             Console.WriteLine($"Mana: {Mana}/{MaxMana}");
-            Console.WriteLine($"Dano básico: {Damage}");
             Console.WriteLine($"XP: {Xp}/{MaxXp}");
         }
 

@@ -61,3 +61,18 @@ c:\Users\Utilizador\OneDrive\RPG\obj\Debug\net8.0\ref\Back-end_RPG.dll
 c:\Users\Utilizador\OneDrive\RPG\bin\Debug\net8.0\Back-end_RPG.exe
 c:\Users\Utilizador\OneDrive\RPG\bin\Debug\net8.0\Back-end_RPG.runtimeconfig.json
 c:\Users\Utilizador\OneDrive\RPG\obj\Debug\net8.0\Back-end_RPG.genruntimeconfig.cache
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\bin\Debug\net8.0\Back-end_RPG.exe
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\bin\Debug\net8.0\Back-end_RPG.deps.json
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\bin\Debug\net8.0\Back-end_RPG.runtimeconfig.json
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\bin\Debug\net8.0\Back-end_RPG.dll
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\bin\Debug\net8.0\Back-end_RPG.pdb
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\obj\Debug\net8.0\Back-end_RPG.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\obj\Debug\net8.0\Back-end_RPG.AssemblyInfoInputs.cache
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\obj\Debug\net8.0\Back-end_RPG.AssemblyInfo.cs
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\obj\Debug\net8.0\Back-end_RPG.csproj.CoreCompileInputs.cache
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\obj\Debug\net8.0\Back-end_RPG.sourcelink.json
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\obj\Debug\net8.0\Back-end_RPG.dll
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\obj\Debug\net8.0\refint\Back-end_RPG.dll
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\obj\Debug\net8.0\Back-end_RPG.pdb
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\obj\Debug\net8.0\Back-end_RPG.genruntimeconfig.cache
+c:\Users\250413\OneDrive - Escola Profissional de Vila do Conde\RPG\RPG\obj\Debug\net8.0\ref\Back-end_RPG.dll
