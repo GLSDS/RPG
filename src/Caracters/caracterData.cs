@@ -1,6 +1,6 @@
 using System;
 using type_element;
-
+using Characters.Inventory;
 
 namespace Characters
 {
@@ -20,6 +20,7 @@ namespace Characters
         public double Xp { get; set; }
         public double MaxXp { get; set; } = 100;
         public TypeElement Element { get; set; } = TypeElement.Normal;
+        public InventarioSlots Inventory { get; set; } = new InventarioSlots(10);
 
         public CharacterData() { }
 

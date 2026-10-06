@@ -3,17 +3,17 @@ using System;
 
 namespace items
 {
-    public class Item
+    public class Items
     {
-        public string ItemName { get; }
-        public string ItemDescription { get; }
+        public string ItemName { get; } = string.Empty;
+        public string ItemDescription { get; } = string.Empty;
         public bool WayEffect { get; }
         public double HpEffect { get; }
         public TypeElement ItemElement { get; }
 
-        private Item() { }
+        private Items() { }
 
-        public Item(string itemName, string itemDescription, bool wayEffect, double hpEffect, TypeElement itemElement = TypeElement.Normal)
+        public Items(string itemName, string itemDescription, bool wayEffect, double hpEffect, TypeElement itemElement = TypeElement.Normal)
         {
             ItemName = itemName;
             ItemDescription = itemDescription;

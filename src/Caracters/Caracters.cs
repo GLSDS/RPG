@@ -1,4 +1,6 @@
 using System;
+using Characters;
+using items;
 
 namespace Characters
 {

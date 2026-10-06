@@ -1,16 +1,16 @@
 using items;
-namespace inventory
+namespace Characters.Inventory
 {
     public class InventarioSlots
     {
-        private readonly Item[] slots;
+        private readonly Items?[] slots;
 
         public InventarioSlots(int numeroSlots)
         {
-            slots = new Item[numeroSlots]; // todos null por padrão
+            slots = new Items?[numeroSlots]; // todos null por padrão
         }
 
-        public bool Adicionar(Item item, int slot)
+        public bool Adicionar(Items item, int slot)
         {
             if (slot < 0 || slot >= slots.Length)
             {
@@ -26,7 +26,7 @@ namespace inventory
             return true;
         }
 
-        public bool AdicionarPrimeiroLivre(Item item)
+        public bool AdicionarPrimeiroLivre(Items item)
         {
             for (int i = 0; i < slots.Length; i++)
             {
@@ -40,7 +40,7 @@ namespace inventory
             return false;
         }
 
-        public Item Obter(int slot) => slots[slot];
+        public Items? Obter(int slot) => slots[slot];
 
         public void Remover(int slot) => slots[slot] = null;
 
@@ -48,7 +48,7 @@ namespace inventory
         {
             for (int i = 0; i < slots.Length; i++)
             {
-                string conteudo = slots[i] == null ? "(vazio)" : slots[i].ItemName;
+                string conteudo = slots[i] == null ? "(vazio)" : slots[i]!.ItemName;
                 Console.WriteLine($"[{i}] {conteudo}");
             }
         }
