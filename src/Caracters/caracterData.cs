@@ -27,7 +27,7 @@ namespace Characters
         public CharacterData(string name, string className, string representation, int level,
                              int hp, int maxHp, int mana, int maxMana,
                              int damage, double xp = 0, double maxXp = 100,
-                             TypeElement element = TypeElement.Normal)
+                             TypeElement element = TypeElement.Normal, InventarioSlots? inventory = null)
         {
             Name = name;
             ClassName = className;

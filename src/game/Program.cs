@@ -1,6 +1,10 @@
+using System;
 using Characters;
+using items;
+using type_item;
 using Monsters;
 using floor1;
+using type_element;
 namespace Program
 {
     static class Program
@@ -28,7 +32,7 @@ namespace Program
             player.DisplayStats();
 
             // Create an enemy
-            Monster enemy = new WarriorSkeleton(new ChoiceLevel(2));
+            Monster enemy = new GiantSpider(new ChoiceLevel(6));
 
             Console.WriteLine("\n╔═══════════════════════════════════════════════════╗");
             Console.WriteLine("║              ⚔️ SIMULAÇÃO DE BATALHA            ║");
@@ -38,10 +42,18 @@ namespace Program
             Console.WriteLine($"⚔️ {player.Name} encontrou um {enemy.Name}!");
             Console.WriteLine();
 
+
             // Battle simulation
             bool playerTurn = true;
             Random rand = new();
             int turn = 1;
+
+
+            if(player.Hp < player.MaxHp * 0.1) // ver se hp esta muito baixo para iniciar a batalha
+            {
+                Console.WriteLine("O jogador não tem HP suficiente para iniciar a batalha.");
+                return;
+            }
 
             while (player.IsAlive && enemy.IsAlive())
             {
@@ -56,9 +68,8 @@ namespace Program
                     Console.WriteLine("Escolha uma ação:");
                     Console.WriteLine("1 - Ataque Básico");
                     Console.WriteLine("2 - Usar Habilidade (Aleatória)");
-                    Console.WriteLine("3 - Curar");
-                    Console.WriteLine("4 - Inventory");
-                    Console.WriteLine("5 - Mostrar Stats");
+                    Console.WriteLine("3 - Inventory"); // fix items system
+                    Console.WriteLine("4 - Mostrar Stats");
                     Console.Write("Opção: ");
 
                     string action = Console.ReadLine() ?? "";
@@ -81,14 +92,12 @@ namespace Program
                             player.Attack(enemy, skill);
                             break;
                         case "3":
-                            player.Heal(50);
-                            break;
-                        case "4":
                             var inventoryProperty = player.GetType().GetProperty("Inventory");
                             if (inventoryProperty is not null)
                             {
                                 var inventory = inventoryProperty.GetValue(player);
                                 var listarMethod = inventory?.GetType().GetMethod("Listar");
+
                                 if (inventory is not null && listarMethod is not null)
                                 {
                                     listarMethod.Invoke(inventory, null);
@@ -103,7 +112,7 @@ namespace Program
                                 Console.WriteLine("Inventário indisponível para este personagem.");
                             }
                             break;
-                        case "5":
+                        case "4":
                             player.DisplayStats();
                             break;
                         default:
