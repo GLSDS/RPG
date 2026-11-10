@@ -15,8 +15,9 @@ namespace Characters
         public int Level { get; set; } = 1;
         public int Hp { get; set; }
         public int MaxHp { get; set; }
-        public int Mana { get; set; }
-        public int MaxMana { get; set; }
+        public double Mana { get; set; }
+        public double MaxMana { get; set; }
+        public int Damage { get; set; }
         public double Xp { get; set; }
         public double MaxXp { get; set; } = 100;
         public TypeElement Element { get; set; } = TypeElement.Normal;
@@ -25,7 +26,7 @@ namespace Characters
         public CharacterData() { }
 
         public CharacterData(string name, string className, string representation, int level,
-                             int hp, int maxHp, int mana, int maxMana,
+                             int hp, int maxHp, double mana, double maxMana,
                              int damage, double xp = 0, double maxXp = 100,
                              TypeElement element = TypeElement.Normal, InventarioSlots? inventory = null)
         {
@@ -37,9 +38,11 @@ namespace Characters
             MaxHp = maxHp;
             Mana = mana;
             MaxMana = maxMana;
+            Damage = damage;
             Xp = xp;
             MaxXp = maxXp;
             Element = element;
+            Inventory = inventory ?? new InventarioSlots(10);
         }
 
         public CharacterData Clone() => (CharacterData)MemberwiseClone();

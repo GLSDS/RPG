@@ -35,18 +35,18 @@ namespace type_element
         // Fire
         AddEffectiveness(TypeElement.Fire, TypeElement.Bug, 2.0);
         AddEffectiveness(TypeElement.Fire, TypeElement.Water, 0.5);
-        AddEffectiveness(TypeElement.Fire, TypeElement.Plant, 0.5);
+        AddEffectiveness(TypeElement.Fire, TypeElement.Plant, 2.0);
         AddEffectiveness(TypeElement.Fire, TypeElement.Normal, 2.0);
 
         // Water
         AddEffectiveness(TypeElement.Water, TypeElement.Fire, 2.0);
-        AddEffectiveness(TypeElement.Water, TypeElement.Plant, 2.0);
+        AddEffectiveness(TypeElement.Water, TypeElement.Plant, 0.5);
         AddEffectiveness(TypeElement.Water, TypeElement.Lightning, 0.5);
 
         // Plant
         AddEffectiveness(TypeElement.Plant, TypeElement.Lightning, 2.0);
         AddEffectiveness(TypeElement.Plant, TypeElement.Air, 1.5);
-        AddEffectiveness(TypeElement.Plant, TypeElement.Fire, 2.0);
+        AddEffectiveness(TypeElement.Plant, TypeElement.Fire, 0.5);
 
         // Air
         AddEffectiveness(TypeElement.Air, TypeElement.Plant, 0.0);
