@@ -10,14 +10,14 @@ namespace Characters
         public Mage() : this("") { }
         public Mage(string name)
         : base(new CharacterData(name, "Mage", "🧙‍♂️", 1, 320, 320, 600, 600, 45,
-         element: TypeElement.Light & TypeElement.Ice)) { }
+         element: TypeElement.Ice)) { }
         public Mage(CharacterData data) : base(data) { }
 
         protected override void RegisterAttacks()
         {
             AddAttack("Fireball",      30, 10, TypeElement.Fire);
             AddAttack("Ice Lance",     70, 40, TypeElement.Ice);
-            AddAttack("Arcane Blast", 120, 60, TypeElement.Light);
+            AddAttack("Light Blast", 120, 60, TypeElement.Light);
             AddAttack("Staff of the Arcane", 150, 80, TypeElement.Light); // artefato como ataque
         }
     }
@@ -30,7 +30,7 @@ namespace Characters
         public Barbarian() : this("") { }
         public Barbarian(string name)
         : base(new CharacterData(name, "Barbarian", "⚔️", 1, 650, 650, 50, 0, 55,
-         element: TypeElement.Fight & TypeElement.Plant)) { }
+         element: TypeElement.Fight)) { }
         public Barbarian(CharacterData data) : base(data) { }
 
         protected override void RegisterAttacks()
@@ -70,7 +70,7 @@ namespace Characters
         public Rogue() : this("") { }
         public Rogue(string name)
         : base(new CharacterData(name, "Rogue", "⚔️", 1, 230, 230, 70, 70, 50,
-         element: TypeElement.Dark & TypeElement.Poison)) { }
+         element: TypeElement.Dark)) { }
         public Rogue(CharacterData data) : base(data) { }
 
         protected override void RegisterAttacks()
@@ -90,7 +90,7 @@ namespace Characters
         public Cleric() : this("") { }
         public Cleric(string name)
         : base(new CharacterData(name, "Cleric", "✝️​", 1, 230, 230, 530, 530, 35,
-         element: TypeElement.Light & TypeElement.Air)) { }
+         element: TypeElement.Light)) { }
         public Cleric(CharacterData data) : base(data) { }
 
         protected override void RegisterAttacks()

@@ -14,11 +14,12 @@ namespace Characters
         public int Level => Data.Level;
         public int Hp { get => Data.Hp; private set => Data.Hp = value; }
         public int MaxHp => Data.MaxHp;
-        public int Mana { get => Data.Mana; private set => Data.Mana = value; }
-        public int MaxMana => Data.MaxMana;
+        public double Mana { get => Data.Mana; private set => Data.Mana = value; }
+        public double MaxMana => Data.MaxMana;
         public double Xp { get => Data.Xp; private set => Data.Xp = value; }
         public double MaxXp => Data.MaxXp;
         public TypeElement Element => Data.Element;
+        public Characters.Inventory.InventarioSlots Inventory => Data.Inventory;
         public bool IsAlive => Hp > 0;
         public bool Shield { get; private set; }
         private int ShieldProtection { get; }
@@ -27,6 +28,7 @@ namespace Characters
         {
             Data = data ?? throw new ArgumentNullException(nameof(data));
             ShieldProtection = Math.Max(1, Data.MaxHp / 4);
+            AddAttack("Ataque Básico", Data.Damage);
             RegisterAttacks();
         }
 
@@ -47,7 +49,7 @@ namespace Characters
             if (attack == null || !CanUse(attack))
                 return;
 
-            Mana -= (int)attack.ManaCost;
+            Mana -= attack.ManaCost;
             if (attack.GrantsShield)
             {
                 Shield = true;
@@ -67,7 +69,7 @@ namespace Characters
             if (attack == null || !CanUse(attack))
                 return;
 
-            Mana -= (int)attack.ManaCost;
+            Mana -= attack.ManaCost;
             if (attack.GrantsShield)
             {
                 Shield = true;
@@ -110,6 +112,17 @@ namespace Characters
 
             Xp += amount;
             Console.WriteLine($"{Name} ganhou {amount} XP. Total: {Xp}/{MaxXp}.");
+            while (MaxXp > 0 && Xp >= MaxXp)
+            {
+                Xp -= MaxXp;
+                Data.Level++;
+                Data.MaxXp = Math.Ceiling(MaxXp * 1.5);
+                Data.MaxHp = (int)Math.Ceiling(MaxHp * 1.1);
+                Data.MaxMana *= 1.1;
+                Hp = MaxHp;
+                Mana = MaxMana;
+                Console.WriteLine($"{Name} subiu para o nível {Level}! HP e mana foram restaurados.");
+            }
         }
 
         public void DisplayStats()

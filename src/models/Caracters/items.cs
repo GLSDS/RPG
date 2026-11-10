@@ -33,6 +33,13 @@ namespace items
             HpEffect = hpEffect;
             ItemElement = itemElement;
         }
+
+        internal Items CloneWithQuantity(int quantity)
+        {
+            var copy = (Items)MemberwiseClone();
+            copy.Quantity = quantity;
+            return copy;
+        }
     }
     
 }

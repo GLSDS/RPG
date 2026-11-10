@@ -41,13 +41,32 @@ namespace Program
 
             Console.WriteLine($"⚔️ {player.Name} encontrou um {enemy.Name}!");
             Console.WriteLine();
+            type_item.TypeItems.ironSword sword = new type_item.TypeItems.ironSword();
 
+            var playerInventoryProperty = player.GetType().GetProperty("Inventory");
+            if (playerInventoryProperty is not null)
+            {
+                var inventory = playerInventoryProperty.GetValue(player);
+                var addItemMethod = inventory?.GetType().GetMethod("AddItem");
+
+                if (inventory is not null && addItemMethod is not null)
+                {
+                    addItemMethod.Invoke(inventory, new object[] { sword });
+                }
+                else
+                {
+                    Console.WriteLine("Inventário indisponível para este personagem.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Inventário indisponível para este personagem.");
+            }
 
             // Battle simulation
             bool playerTurn = true;
             Random rand = new();
             int turn = 1;
-
 
             if(player.Hp < player.MaxHp * 0.1) // ver se hp esta muito baixo para iniciar a batalha
             {
@@ -74,6 +93,7 @@ namespace Program
 
                     string action = Console.ReadLine() ?? "";
                     Console.WriteLine();
+                    bool consumesTurn = true;
 
                     switch (action)
                     {
@@ -88,7 +108,10 @@ namespace Program
                                 Console.WriteLine("Este personagem não possui ataques.");
                                 break;
                             }
+                            
+                            
                             string skill = skills[rand.Next(skills.Length)];
+                            Console.WriteLine($"{player.Name} usa {skill}!");
                             player.Attack(enemy, skill);
                             break;
                         case "3":
@@ -111,15 +134,20 @@ namespace Program
                             {
                                 Console.WriteLine("Inventário indisponível para este personagem.");
                             }
+                            consumesTurn = false;
                             break;
                         case "4":
                             player.DisplayStats();
+                            consumesTurn = false;
                             break;
                         default:
                             Console.WriteLine("Ação inválida! Atacando basicamente.");
                             player.Attack(enemy, "Ataque Básico");
                             break;
                     }
+
+                    if (!consumesTurn)
+                        continue;
 
                     // Gain XP if enemy dies
                     if (!enemy.IsAlive())

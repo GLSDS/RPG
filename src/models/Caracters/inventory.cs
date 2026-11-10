@@ -12,11 +12,13 @@ namespace Characters.Inventory
 
         public InventarioSlots(int numeroSlots)
         {
+            if (numeroSlots <= 0) throw new ArgumentOutOfRangeException(nameof(numeroSlots));
             slots = new Items?[numeroSlots];
         }
 
         public bool Adicionar(Items item, int slot)
         {
+            if (item == null || item.Quantity <= 0) return false;
             if (slot < 0 || slot >= slots.Length)
             {
                 Console.WriteLine("Slot inválido!");
@@ -26,8 +28,10 @@ namespace Characters.Inventory
             // Slot vazio → coloca direto
             if (slots[slot] == null)
             {
-                slots[slot] = item;
-                return true;
+                int armazenada = Math.Min(MaxStackPadrao, item.Quantity);
+                slots[slot] = item.CloneWithQuantity(armazenada);
+                item.Quantity -= armazenada;
+                return item.Quantity == 0 || AdicionarPrimeiroLivre(item);
             }
 
             // Slot ocupado → verifica se é o MESMO item (mesmo nome)
@@ -60,6 +64,7 @@ namespace Characters.Inventory
 
         public bool AdicionarPrimeiroLivre(Items item)
         {
+            if (item == null || item.Quantity <= 0) return false;
             // 1ª passada: tenta empilhar em slots com o mesmo item
             for (int i = 0; i < slots.Length; i++)
             {
@@ -85,8 +90,10 @@ namespace Characters.Inventory
             {
                 if (slots[i] == null)
                 {
-                    slots[i] = item;
-                    return true;
+                    int armazenada = Math.Min(MaxStackPadrao, item.Quantity);
+                    slots[i] = item.CloneWithQuantity(armazenada);
+                    item.Quantity -= armazenada;
+                    if (item.Quantity <= 0) return true;
                 }
             }
 
@@ -94,14 +101,17 @@ namespace Characters.Inventory
             return false;
         }
 
-        public Items? Obter(int slot) => slots[slot];
+        public Items? Obter(int slot) => slot >= 0 && slot < slots.Length ? slots[slot] : null;
 
-        public void Remover(int slot) => slots[slot] = null;
+        public void Remover(int slot)
+        {
+            if (slot >= 0 && slot < slots.Length) slots[slot] = null;
+        }
 
         // Remove X unidades de um item em um slot
         public bool RemoverQuantidade(int slot, int quantidade)
         {
-            if (slot < 0 || slot >= slots.Length || slots[slot] == null)
+            if (slot < 0 || slot >= slots.Length || slots[slot] == null || quantidade <= 0)
                 return false;
 
             if (quantidade >= slots[slot]!.Quantity)
